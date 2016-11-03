@@ -5,6 +5,6 @@ Version: 0.1.0
 Author: Ian Kyle
 Maintainer: Ian Kyle <iankyle1@gmail.com>
 Description: Converts existing R functions into "errorized" versions
-License: BSD-3
+License: BSD 3-Clause License
 Encoding: UTF-8
 LazyData: true

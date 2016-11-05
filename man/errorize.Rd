@@ -31,17 +31,11 @@ If you want to create a drop-in replacement of an existing R function (i.e. crea
 \value{
 A function identical to the function passed to \code{errorize} but with enhanced error and warning logging capabilities.
 }
-\references{
-}
+
+
 \author{
 Ian K. Kyle
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
 \code{\link{saveRDS}}, \code{\link{readRDS}} for reading the saved error or warning information back in
 }
@@ -50,7 +44,7 @@ Ian K. Kyle
 lm <- errorize(stats::lm)
 data("cars")
 lm(speed ~ dist, data = cars)             # works
-lm(speed ~ missing_variable, data = cars) # this errors out and saves the data to a .Rda file in the working directory
+lm(speed ~ missing_variable, data = cars) # this errors out and saves the data to a .Rda file
 
 # read the saved data back in (timestamp on filename will change based on when the above is run)
 er <- readRDS('./lm_error_1478361734.Rds')

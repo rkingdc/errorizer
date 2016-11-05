@@ -5,12 +5,10 @@ Version: 0.1.0
 Author: Ian K. Kyle
 Maintainer: Ian K. Kyle <iankyle1@gmail.com>
 Description: Converts existing R functions into "errorized" versions
-License: BSD 3-Clause License
+License: BSD_3_clause + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Suggests:
-    knitr,
-    rmarkdown
+Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
 URL: https://github.com/ikkyle/errorizer

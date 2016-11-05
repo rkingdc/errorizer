@@ -1,3 +1,4 @@
+#' @export
 errorize <- function(FUN, stopOnError=TRUE, onErrorReturn=NULL){
   fname  <- deparse(substitute(FUN))
   fname2 <- gsub('^.*::', '', fname)

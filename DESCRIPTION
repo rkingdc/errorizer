@@ -13,5 +13,5 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
-URL: https://github.com/ikkyle/errorize
-BugReports: https://github.com/ikkyle/errorize/issues
+URL: https://github.com/ikkyle/errorizer
+BugReports: https://github.com/ikkyle/errorizer/issues

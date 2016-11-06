@@ -1,0 +1,91 @@
+---
+title: "Using errorize"
+author: "Ian K. Kyle"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Overview
+
+```{r include=FALSE}
+library(errorizer)
+```
+
+The `errorizer` package allows one to create drop-in replacements for existing R functions, but with added logging and handling functionality when encountering errors or warnings. When working interactively, it is fairly easy to debug most errors because one can access any and all objects entering a function call. When using `R CMD BATCH`, `Rscript`, or when running code in parallel, one often does not have the ability to immediately resurrect the objects that have entered a function call for debugging purposes. 
+
+The `errorize` function accepts an existing R function as its first argument and returns a R function with the exact same arguments and functionality. However, if an error or warning occurs when running that "errorized" R function, it will save a `.Rds` file to the current working directory with the relevant objects and information required to immediately recreate the error.  
+
+## Usage 
+
+### "Errorizing" a function
+
+Use `errorize()` to create an "errorized" function:
+
+```{r}
+mean2 <- errorize(mean)
+```
+
+The function `mean2` now works as `mean` does:
+
+```{r}
+mean2(1:10)
+```
+
+But it will now write to a `.Rda` file if it issues a warning:
+
+```R
+mean2(letters)
+```
+
+```
+Warning message:
+In value[[3L]](cond) :
+  Wrote to ./mean_warning_1478361326.Rds on catching "simpleWarning in mean.default(x = c("a", "b", "c", "d", "e", "f", "g", "h", "i", : argument is not numeric or logical: returning NA
+```
+
+If you want to create a drop-in replacement for an existing function, you should specify the function's namespace in the call to `errorize` to avoid conflicts. 
+
+```R
+lm <- errorize(stats::lm)
+data("cars")
+lm(speed ~ dist, data = cars) # this works
+```
+
+```R
+lm(speed ~ missing_variable, data = cars) # this errors out and saves the data
+```
+
+```
+Error in value[[3L]](cond) : 
+  Wrote to ./lm_error_1478361734.Rds on catching "Error in eval(expr, envir, enclos): object 'missing_variable' not found
+```
+
+To read that data back in and debug, use `readRDS()`.
+
+```R
+er <- readRDS('./lm_error_1478361734.Rds')
+```
+
+Recreate the error using `do.call`:
+
+```R
+do.call(er$fxn, er$arglst)
+```
+
+You can inspect the objects that entered the function call, they are all separate elements of a named list that is the `arglist` slot of the saved object.
+
+### Additional arguments
+
+An "errorized" function will by default halt progress if the function issues an error, but you can set the `errorize` argument `stopOnError` to `FALSE`. In this case, the function will issue a warning instead of an error, and will return the value specified in the argument `onErrorReturn` (default is `NULL`).
+
+## Limitations
+
+This is useful for "errorizing" one or several functions in a script, but if you want this type of behavior for all function calls, you might want to use `options(error = quote(dump.frames("dump", TRUE)))`. See `?debugger` (from the `utils` package).  
+
+This method won't work if an object passed to the errorizer function does not exist since `errorize` evaluates all arguments in the `parent.frame` before passing them to the relevant function. 
+
+This method will still work if objects from the global environment are needed for the function to work but aren't passed explicitly to the errorized function, but those objects will not be saved out to the `.Rds` file in the case of an error or warning. 

@@ -4,7 +4,7 @@ Title: R Function Errorizer
 Version: 0.1.0
 Author: Ian K. Kyle
 Maintainer: Ian K. Kyle <iankyle1@gmail.com>
-Description: Converts existing R functions into "errorized" versions
+Description: Provides a function to convert existing R functions into "errorized" versions.
 License: BSD_3_clause + file LICENSE
 Encoding: UTF-8
 LazyData: true

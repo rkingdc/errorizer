@@ -35,7 +35,7 @@ The function `mean2` now works as `mean` does:
 mean2(1:10)
 ```
 
-But it will now write to a `.Rda` file if it issues a warning:
+But it will now write to a `.Rds` file if it issues a warning:
 
 ```R
 mean2(letters)

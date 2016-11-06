@@ -1,10 +1,16 @@
 Package: errorizer
 Type: Package
-Title: R Function Errorizer
-Version: 0.1.0
+Title: Function Errorizer
+Version: 0.1.1
 Author: Ian K. Kyle
 Maintainer: Ian K. Kyle <iankyle1@gmail.com>
-Description: Provides a function to convert existing R functions into "errorized" versions.
+Description: Provides a function to convert existing R functions into "errorized" versions 
+    with added logging and handling functionality when encountering errors or warnings. 
+    The errorize function accepts an existing R function as its first argument and 
+    returns a R function with the exact same arguments and functionality. However, 
+    if an error or warning occurs when running that "errorized" R function, it will save a 
+    .Rds file to the current working directory with the relevant objects and information 
+    required to immediately recreate the error.  
 License: BSD_3_clause + file LICENSE
 Encoding: UTF-8
 LazyData: true

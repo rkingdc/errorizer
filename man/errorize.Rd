@@ -7,12 +7,15 @@ Function to create "Errorized" version of existing R functions.
 This function accepts an existing R function as its first argument and returns a new R function with enhanced error and warning logging capabilities.
 }
 \usage{
-errorize(FUN, stopOnError = TRUE, onErrorReturn = NULL, ...)
+errorize(FUN, fileSuffix = NULL, stopOnError = TRUE, onErrorReturn = NULL, ...)
 }
 \arguments{
   \item{FUN}{
 The function to "errorize". If you are making a drop-in replacement, include the namespace (see Details).
 }
+ \item{fileSuffix}{
+ A vector of length one. The suffix to append to the .Rds filename if there is an error or warning. If \code{NULL} (the default) the suffix will be the current POSIX time. If \code{NA}, no suffix will be added to the file name and subsequent errors or warnings from the same function will be overwritten. Anything else will be coerced to character and appended.
+ }
   \item{stopOnError}{
 Logical. If the function errors out, do you want to stop the script (the default) or issue a warning and proceed.
 }

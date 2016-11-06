@@ -17,7 +17,7 @@ library(errorizer)
 
 The `errorizer` package allows one to create drop-in replacements for existing R functions, but with added logging and handling functionality when encountering errors or warnings. When working interactively, it is fairly easy to debug most errors because one can access any and all objects entering a function call. When using `R CMD BATCH`, `Rscript`, or when running code in parallel, one often does not have the ability to immediately resurrect the objects that have entered a function call for debugging purposes. 
 
-The `errorize` function accepts an existing R function as its first argument and returns a R function with the exact same arguments and functionality. However, if an error or warning occurs when running that "errorized" R function, it will save a `.Rda` file to the current working directory with the relevant objects and information required to immediately recreate the error.  
+The `errorize` function accepts an existing R function as its first argument and returns a R function with the exact same arguments and functionality. However, if an error or warning occurs when running that "errorized" R function, it will save a `.Rds` file to the current working directory with the relevant objects and information required to immediately recreate the error.  
 
 ## Usage 
 

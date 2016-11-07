@@ -1,5 +1,13 @@
 ## Installing
 
+`errorizer` is on CRAN. Install it with:
+
+```R
+install.packages('errorizer')
+```
+
+Or install the development version.
+
 Install `devtools` if you don't have it:
 ```R
 install.packages('devtools')

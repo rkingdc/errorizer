@@ -47,7 +47,7 @@ Ian K. Kyle
 lm <- errorize(stats::lm)
 data("cars")
 lm(speed ~ dist, data = cars)             # works
-lm(speed ~ missing_variable, data = cars) # this errors out and saves the data to a .Rda file
+lm(speed ~ missing_variable, data = cars) # this errors out and saves the data to a .Rds file
 
 # read the saved data back in (timestamp on filename will change based on when the above is run)
 er <- readRDS('./lm_error_1478361734.Rds')

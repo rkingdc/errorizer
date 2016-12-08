@@ -18,37 +18,34 @@ errorize <- function(FUN, fileSuffix=NULL, stopOnError=TRUE, onErrorReturn=NULL,
 
   FUN2 <- function() {
     args <- lapply(as.list(match.call())[-1L], eval, parent.frame())
-    tryCatch(do.call(FUN, args),
-             error = function(e){
+    tryCatch(do.call(FUN, args), 
+             warning = function(w) {
                stime <- Sys.time()
-               flname <- sprintf('./%s_error%s.Rds', fxname,  fs)
-               saveRDS(object = list(error   = as.character(e),
-                                     time    = stime,
-                                     fxn     = FUN,
-                                     arglst  = args),
-                       file = flname,
+               flname <- sprintf("./%s_warning%s.Rds", fxname, fs)
+               saveRDS(object = list(warning = as.character(w), 
+                                     time = stime, fxn = FUN, arglst = args), file = flname, 
                        ...)
-               if (stopOnError) {
-                 stop(sprintf('Wrote to %s on catching "%s"',
-                              flname, as.character(e)))
-               } else {
-                 warning(sprintf('Wrote to %s on catching "%s"',
-                              flname, as.character(e)))
-                 return(onErrorReturn)
-               }
-             },
-             warning = function(w){
-               stime <- Sys.time()
-               flname <- sprintf('./%s_warning%s.Rds', fxname, fs)
-               saveRDS(object = list(warning = as.character(w),
-                                     time    = stime,
-                                     fxn     = FUN,
-                                     arglst  = args),
-                       file = flname,
-                       ...)
-               warning(sprintf('Wrote to %s on catching "%s"',
-                               flname, as.character(w)))
-             })
+               warning(sprintf("Wrote to %s on catching \"%s\"", 
+                               flname, as.character(w)),
+                       call.=FALSE)
+             }, 
+             error = function(e) {
+      stime <- Sys.time()
+      flname <- sprintf("./%s_error%s.Rds", fxname, fs)
+      saveRDS(object = list(error = as.character(e), time = stime, 
+                            fxn = FUN, arglst = args), file = flname, ...)
+      if (stopOnError) {
+        stop(sprintf("Wrote to %s on catching \"%s\"", 
+                     flname, as.character(e)),
+             .call=FALSE)
+      }
+      else {
+        message(sprintf("Wrote to %s on catching \"%s\"", 
+                        flname, as.character(e)),
+                call.=FALSE)
+        return(onErrorReturn)
+      }
+    })
   }
   formals(FUN2) <- formals(FUN)
   FUN2

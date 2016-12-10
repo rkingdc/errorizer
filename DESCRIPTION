@@ -11,7 +11,7 @@ Description: Provides a function to convert existing R functions into "errorized
     if an error or warning occurs when running that "errorized" R function, it will save a 
     .Rds file to the current working directory with the relevant objects and information 
     required to immediately recreate the error.  
-License: BSD_3_clause + file LICENSE
+License: BSD_2_clause + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests: knitr, rmarkdown

@@ -1,7 +1,7 @@
 Package: errorizer
 Type: Package
 Title: Function Errorizer
-Version: 0.2.0
+Version: 0.2.1
 Author: Ian K. Kyle
 Maintainer: Ian K. Kyle <iankyle1@gmail.com>
 Description: Provides a function to convert existing R functions into "errorized" versions 
